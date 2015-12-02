@@ -1,7 +1,3 @@
-"""
-http://api.openweathermap.org/data/2.5/weather?q=Daugavpils&appid=b6ea72690d28e65f1c5c441232236df8
-"""
-
 import urllib.request
 import json
 import paho.mqtt.client as mqtt
@@ -9,10 +5,10 @@ import time
 import argparse
 
 
-appid = 'b6ea72690d28e65f1c5c441232236df8'
+#appid = 'b6ea72690d28e65f1c5c441232236df8'
 #city = 'Daugavpils'
 city = 'Visaginas'
-uri = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}'.format(city,appid)
+base_uri = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
 
 
 def get_temp(uri):
@@ -64,10 +60,13 @@ def put_mqtt(client,temperature):
 if __name__ == "__main__":    
      parser = argparse.ArgumentParser(description='Well depth sensors processing.')
      parser.add_argument('mqtt_broker_addr', type=str, nargs=1, help='MQTT Broker server name')
+     parser.add_argument('openweathermap_apid', type=str, nargs=1, help='Openweathermap AppID')
      args = parser.parse_args()
      mqtt_server = args.mqtt_broker_addr[0]
+     appid  = args.openweathermap_apid[0]
      mqtt_port = 1883
      mqtt_client = mqtt_init(mqtt_server, mqtt_port)
+     uri = base_uri.format(city,appid)
      while(1):
          temperature = get_temp(uri)
          print(temperature)
