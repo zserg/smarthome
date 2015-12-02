@@ -5,7 +5,6 @@ import time
 import argparse
 
 
-#appid = 'b6ea72690d28e65f1c5c441232236df8'
 #city = 'Daugavpils'
 city = 'Visaginas'
 base_uri = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
